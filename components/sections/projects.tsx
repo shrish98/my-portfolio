@@ -54,13 +54,14 @@ const projects: Project[] = [
   },
   {
     id: 4,
-    title: "AI Cold Email Generator",
-    description: "Monorepo MERN application that generates cold emails, LinkedIn DMs, and follow-ups based on prompts. Fully containerized with automated CI/CD pipelines.",
-    image: "/Pixel-2.png",
-    tags: ["React", "Node.js", "Express", "MongoDB", "Docker", "GitHub Actions"],
-    category: "fullstack",
-    url: "https://github.com/shrish98/ai-cold-email-generator", // use github url since it's monorepo reference
-    github: "https://github.com/shrish98/ai-cold-email-generator",
+    title: "AI App Builder",
+    description: "Full-stack AI-powered React app generator like Bolt.new, offering live Sandpack code preview, persistent chat history, and Cline AI agents for multi-file improvements.",
+    image: "/riverflow.png",
+    tags: ["Next.js 15", "Gemini 3.5", "Cline SDK", "Sandpack", "Supabase", "Clerk"],
+    category: "ai",
+    url: "https://github.com/shrish98/AI-app-builder",
+    github: "https://github.com/shrish98/AI-app-builder",
+    featured: true,
   },
 ];
 
