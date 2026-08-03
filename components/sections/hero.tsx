@@ -26,13 +26,6 @@ const socialLinks = [
   },
 ];
 
-const nodes = [
-  { key: "fe", label: "FRONTEND", sub: "React · Next.js", x: 40, y: 55, tx: 130, ty: 90 },
-  { key: "be", label: "BACKEND", sub: "Node · Express", x: 40, y: 175, tx: 130, ty: 175 },
-  { key: "db", label: "DATABASE", sub: "Postgres · Mongo", x: 370, y: 55, tx: 280, ty: 90 },
-  { key: "ai", label: "AI AGENTS", sub: "LangGraph · Gemini", x: 370, y: 175, tx: 280, ty: 175 },
-];
-
 export function HeroSection() {
   return (
     <section className="relative min-h-[100dvh] w-full flex items-center justify-center overflow-hidden">
@@ -44,13 +37,13 @@ export function HeroSection() {
       <div className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-indigo-600/8 blur-3xl pointer-events-none" />
       <div className="absolute bottom-1/3 right-1/4 w-48 h-48 rounded-full bg-cyan-600/6 blur-3xl pointer-events-none" />
 
-      <div className="relative z-10 mx-auto max-w-7xl w-full px-4 md:px-6 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-        {/* Left — Text Content */}
+      <div className="relative z-10 mx-auto max-w-4xl w-full px-4 md:px-6 flex flex-col items-center text-center">
+        {/* Text Content */}
         <motion.div
-          initial={{ opacity: 0, x: -30 }}
-          animate={{ opacity: 1, x: 0 }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: "easeOut" }}
-          className="space-y-6"
+          className="space-y-6 flex flex-col items-center max-w-2xl"
         >
           {/* Badge */}
           <motion.div
@@ -83,8 +76,7 @@ export function HeroSection() {
               transition={{ delay: 0.3, duration: 0.6 }}
               className="text-5xl lg:text-7xl font-bold tracking-tight"
             >
-              <span className="gradient-text">Shrishti</span>
-              <br />
+              <span className="gradient-text">Shrishti</span>{" "}
               <span className="text-foreground/90">Tomar</span>
             </motion.h1>
           </div>
@@ -94,7 +86,7 @@ export function HeroSection() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5 }}
-            className="text-xl text-foreground/60 flex items-center gap-2 font-mono"
+            className="text-xl text-foreground/60 flex items-center gap-2 font-mono justify-center"
           >
             <span className="text-foreground/40">{'//'}</span>
             <span className="text-indigo-400 font-semibold">
@@ -133,7 +125,7 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.7 }}
-            className="flex flex-wrap gap-3"
+            className="flex flex-wrap justify-center gap-3 pt-2"
           >
             <Link href="#projects">
               <button className="inline-flex items-center gap-2 px-6 py-3 font-semibold text-sm bg-indigo-500 text-slate-950 hover:bg-indigo-400 transition-all duration-200 cursor-pointer">
@@ -154,10 +146,10 @@ export function HeroSection() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.85 }}
-            className="flex items-center gap-3"
+            className="flex items-center justify-center gap-3 pt-4"
           >
             <span className="font-mono text-xs text-foreground/30">Find me on</span>
-            <div className="h-px flex-1 max-w-[40px] bg-white/10" />
+            <div className="h-px w-8 bg-white/10" />
             <div className="flex gap-2">
               {socialLinks.map(({ href, icon: Icon, label, color }) => (
                 <motion.a
@@ -175,77 +167,6 @@ export function HeroSection() {
               ))}
             </div>
           </motion.div>
-        </motion.div>
-
-        {/* Right — Schematic system diagram */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.94 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-          className="relative flex items-center justify-center"
-        >
-          <div className="absolute w-72 h-72 rounded-full bg-indigo-600/10 blur-3xl animate-pulse-glow pointer-events-none" />
-
-          <div className="plate relative w-full max-w-md p-6">
-            <div className="eyebrow mb-4">fig. 01 — system overview</div>
-            <svg viewBox="0 0 410 230" className="w-full h-auto">
-              {/* wires */}
-              {nodes.map((n) => (
-                <line
-                  key={`wire-${n.key}`}
-                  x1={n.tx}
-                  y1={n.ty}
-                  x2={205}
-                  y2={115}
-                  stroke="#22d3ee"
-                  strokeOpacity="0.5"
-                  strokeWidth="1.2"
-                  strokeDasharray="4 3"
-                  className="wire-draw"
-                />
-              ))}
-
-              {/* outer nodes */}
-              {nodes.map((n) => (
-                <g key={n.key}>
-                  <circle cx={n.x} cy={n.y} r="22" fill="none" stroke="#818cf8" strokeWidth="1.4" opacity="0.8" />
-                  <text x={n.x} y={n.y + 4} textAnchor="middle" className="font-mono" fontSize="9" fill="#ECE6D8" opacity="0.85">
-                    {n.key.toUpperCase()}
-                  </text>
-                  <text
-                    x={n.x < 200 ? n.x + 30 : n.x - 30}
-                    y={n.y - 14}
-                    textAnchor={n.x < 200 ? "start" : "end"}
-                    className="font-mono"
-                    fontSize="9"
-                    fill="#818cf8"
-                    opacity="0.75"
-                  >
-                    {n.label}
-                  </text>
-                  <text
-                    x={n.x < 200 ? n.x + 30 : n.x - 30}
-                    y={n.y - 2}
-                    textAnchor={n.x < 200 ? "start" : "end"}
-                    fontSize="8"
-                    fill="#ECE6D8"
-                    opacity="0.4"
-                  >
-                    {n.sub}
-                  </text>
-                </g>
-              ))}
-
-              {/* center node */}
-              <circle cx="205" cy="115" r="34" fill="#030712" stroke="#818cf8" strokeWidth="1.6" />
-              <text x="205" y="112" textAnchor="middle" className="font-mono" fontSize="12" fontWeight="700" fill="#818cf8">
-                ST
-              </text>
-              <text x="205" y="126" textAnchor="middle" className="font-mono" fontSize="7" fill="#ECE6D8" opacity="0.5">
-                core
-              </text>
-            </svg>
-          </div>
         </motion.div>
       </div>
     </section>
