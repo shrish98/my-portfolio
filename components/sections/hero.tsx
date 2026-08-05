@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { TypeAnimation } from 'react-type-animation';
 import { Github, Linkedin, Mail, Download, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
+import { TechCluster } from '@/components/tech-cluster';
 
 const socialLinks = [
   {
@@ -37,13 +38,13 @@ export function HeroSection() {
       <div className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-indigo-600/8 blur-3xl pointer-events-none" />
       <div className="absolute bottom-1/3 right-1/4 w-48 h-48 rounded-full bg-cyan-600/6 blur-3xl pointer-events-none" />
 
-      <div className="relative z-10 mx-auto max-w-4xl w-full px-4 md:px-6 flex flex-col items-center text-center">
-        {/* Text Content */}
+      <div className="relative z-10 mx-auto max-w-7xl w-full px-4 md:px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        {/* Left — Text Content */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, x: -30 }}
+          animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.7, ease: "easeOut" }}
-          className="space-y-6 flex flex-col items-center max-w-2xl"
+          className="space-y-6 flex flex-col items-start text-left max-w-xl"
         >
           {/* Badge */}
           <motion.div
@@ -76,7 +77,8 @@ export function HeroSection() {
               transition={{ delay: 0.3, duration: 0.6 }}
               className="text-5xl lg:text-7xl font-bold tracking-tight"
             >
-              <span className="gradient-text">Shrishti</span>{" "}
+              <span className="gradient-text">Shrishti</span>
+              <br />
               <span className="text-foreground/90">Tomar</span>
             </motion.h1>
           </div>
@@ -86,7 +88,7 @@ export function HeroSection() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5 }}
-            className="text-xl text-foreground/60 flex items-center gap-2 font-mono justify-center"
+            className="text-xl text-foreground/60 flex items-center gap-2 font-mono"
           >
             <span className="text-foreground/40">{'//'}</span>
             <span className="text-indigo-400 font-semibold">
@@ -125,7 +127,7 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.7 }}
-            className="flex flex-wrap justify-center gap-3 pt-2"
+            className="flex flex-wrap gap-3 pt-2"
           >
             <Link href="#projects">
               <button className="inline-flex items-center gap-2 px-6 py-3 font-semibold text-sm bg-indigo-500 text-slate-950 hover:bg-indigo-400 transition-all duration-200 cursor-pointer">
@@ -146,7 +148,7 @@ export function HeroSection() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.85 }}
-            className="flex items-center justify-center gap-3 pt-4"
+            className="flex items-center gap-3 pt-4"
           >
             <span className="font-mono text-xs text-foreground/30">Find me on</span>
             <div className="h-px w-8 bg-white/10" />
@@ -167,6 +169,16 @@ export function HeroSection() {
               ))}
             </div>
           </motion.div>
+        </motion.div>
+
+        {/* Right — 3D Floating Interactive Tech Cluster */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.94 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+          className="w-full flex items-center justify-center"
+        >
+          <TechCluster />
         </motion.div>
       </div>
     </section>
