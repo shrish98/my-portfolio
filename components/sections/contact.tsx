@@ -24,12 +24,12 @@ export default function Contact() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    setTimeout(() => { setIsLoading(false); setFormStatus('success'); }, 1500);
+    setTimeout(() => { setIsLoading(false); setFormStatus('success'); }, 1200);
   };
 
   const infoItems = [
-    { icon: Mail, label: "Email", value: "shrishtitomar300@gmail.com", href: "mailto:shrishtitomar300@gmail.com", colorClass: "text-indigo-400 bg-indigo-400/15" },
-    { icon: MapPin, label: "Location", value: "Delhi, India", href: null, colorClass: "text-cyan-400 bg-cyan-500/15" },
+    { icon: Mail, label: "Email", value: "shrishtitomar300@gmail.com", href: "mailto:shrishtitomar300@gmail.com" },
+    { icon: MapPin, label: "Location", value: "Delhi, India", href: null },
   ];
 
   const socialLinks = [
@@ -37,43 +37,59 @@ export default function Contact() {
     { href: "https://www.linkedin.com/in/shrishti-tomar-a924a1274/", icon: Linkedin, label: "LinkedIn" },
   ];
 
-  const inputCls = "w-full px-4 py-3 bg-white/5 border border-white/10 text-foreground placeholder-foreground/30 focus:outline-none focus:border-indigo-400/50 focus:ring-1 focus:ring-indigo-400/30 transition-all duration-200 text-sm";
+  const inputCls = "w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-foreground placeholder-foreground/30 focus:outline-none focus:border-emerald-400/50 focus:ring-1 focus:ring-emerald-400/30 transition-all duration-200 text-sm";
 
   return (
-    <section ref={ref} className="py-8">
-      <motion.div initial={{ opacity: 0, y: 20 }} animate={isInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6 }} className="text-center mb-16">
-        <div className="eyebrow mb-4">let&apos;s connect</div>
-        <h2 className="text-4xl lg:text-5xl font-bold gradient-text mb-4">Get In Touch</h2>
-        <p className="text-foreground/50 max-w-lg mx-auto text-sm leading-relaxed">
-          Have a project in mind, an opportunity, or just want to say hi? My inbox is always open.
+    <section ref={ref} className="py-12">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={isInView ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.6 }}
+        className="text-center mb-16"
+      >
+        <span className="eyebrow mb-3">GET IN TOUCH</span>
+        <h2 className="text-4xl lg:text-5xl font-extrabold tracking-tight mb-4">
+          Let&apos;s Build <span className="gradient-text">Together</span>
+        </h2>
+        <p className="text-foreground/60 max-w-lg mx-auto text-base leading-relaxed">
+          Have a project in mind, an engineering opportunity, or just want to connect? Send me a message below.
         </p>
-        <div className="h-px w-24 mx-auto mt-4 bg-gradient-to-r from-transparent via-indigo-400 to-transparent" />
       </motion.div>
 
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 max-w-5xl mx-auto">
-        {/* Form */}
-        <motion.div initial={{ opacity: 0, x: -20 }} animate={isInView ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.6, delay: 0.1 }} className="lg:col-span-3">
-          <div className="plate-ticks glass-dark p-7 gradient-border h-full">
-            <h3 className="text-lg font-bold mb-6 flex items-center gap-2">
-              <Send className="h-4 w-4 text-indigo-400" />
-              Send Me a Message
+        {/* Form Column */}
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          animate={isInView ? { opacity: 1, x: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.1 }}
+          className="lg:col-span-3"
+        >
+          <div className="glass-card p-8 border border-white/10 h-full shadow-2xl">
+            <h3 className="text-xl font-bold mb-6 flex items-center gap-2.5 text-foreground">
+              <Send className="h-5 w-5 text-emerald-400" />
+              Send a Message
             </h3>
             <form onSubmit={handleSubmit} className="space-y-5">
               <div>
-                <label htmlFor="cn" className="block text-xs font-semibold text-foreground/50 uppercase tracking-wider mb-2">Name</label>
+                <label htmlFor="cn" className="block text-xs font-semibold text-foreground/60 uppercase tracking-wider mb-2">Name</label>
                 <input type="text" id="cn" value={name} onChange={e => setName(e.target.value)} className={inputCls} placeholder="Your name" required />
               </div>
               <div>
-                <label htmlFor="ce" className="block text-xs font-semibold text-foreground/50 uppercase tracking-wider mb-2">Email</label>
+                <label htmlFor="ce" className="block text-xs font-semibold text-foreground/60 uppercase tracking-wider mb-2">Email</label>
                 <input type="email" id="ce" value={email} onChange={e => setEmail(e.target.value)} className={inputCls} placeholder="your@email.com" required />
               </div>
               <div>
-                <label htmlFor="cm" className="block text-xs font-semibold text-foreground/50 uppercase tracking-wider mb-2">Message</label>
-                <textarea id="cm" value={message} onChange={e => setMessage(e.target.value)} rows={5} className={`${inputCls} resize-none`} placeholder="Tell me about your project or just say hi..." required />
+                <label htmlFor="cm" className="block text-xs font-semibold text-foreground/60 uppercase tracking-wider mb-2">Message</label>
+                <textarea id="cm" value={message} onChange={e => setMessage(e.target.value)} rows={5} className={`${inputCls} resize-none`} placeholder="Tell me about your project or opportunity..." required />
               </div>
 
-              <motion.button type="submit" disabled={isLoading || formStatus === 'success'} whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.98 }}
-                className="w-full py-3 px-6 font-semibold text-sm text-slate-950 bg-indigo-500 hover:bg-indigo-400 disabled:opacity-60 disabled:cursor-not-allowed transition-all duration-200 flex items-center justify-center gap-2 shimmer cursor-pointer">
+              <motion.button
+                type="submit"
+                disabled={isLoading || formStatus === 'success'}
+                whileHover={{ scale: 1.01 }}
+                whileTap={{ scale: 0.98 }}
+                className="accent-btn w-full py-3.5 px-6 rounded-xl text-sm font-bold disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2 cursor-pointer shadow-lg"
+              >
                 {isLoading ? (
                   <><svg className="animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" /><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" /></svg>Sending...</>
                 ) : formStatus === 'success' ? (
@@ -84,43 +100,57 @@ export default function Contact() {
               </motion.button>
 
               {formStatus === 'success' && (
-                <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="p-3 bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 text-sm text-center flex items-center justify-center gap-2">
+                <motion.div
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="p-3.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 text-sm text-center flex items-center justify-center gap-2"
+                >
                   <CheckCircle2 className="h-4 w-4" />
-                  Opening your email client... I'll get back to you soon!
+                  Opening your email client... I&apos;ll respond shortly!
                 </motion.div>
               )}
             </form>
           </div>
         </motion.div>
 
-        {/* Info Panel */}
-        <motion.div initial={{ opacity: 0, x: 20 }} animate={isInView ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.6, delay: 0.2 }} className="lg:col-span-2 space-y-5">
-          <div className="plate-ticks glass-dark p-6 gradient-border space-y-4">
-            <div className="eyebrow">contact info</div>
-            {infoItems.map(({ icon: Icon, label, value, href, colorClass }) => (
-              <div key={label} className="flex items-center gap-4 p-4 bg-white/3 border border-white/8 hover:border-indigo-400/20 transition-all duration-200">
-                <div className={`h-10 w-10 flex items-center justify-center flex-shrink-0 ${colorClass}`}>
+        {/* Info Column */}
+        <motion.div
+          initial={{ opacity: 0, x: 20 }}
+          animate={isInView ? { opacity: 1, x: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="lg:col-span-2 space-y-6"
+        >
+          <div className="glass-card p-7 border border-white/10 space-y-4">
+            <span className="eyebrow">DIRECT DETAILS</span>
+            {infoItems.map(({ icon: Icon, label, value, href }) => (
+              <div key={label} className="flex items-center gap-4 p-4 rounded-xl bg-white/3 border border-white/8 hover:border-white/20 transition-all duration-200">
+                <div className="h-10 w-10 rounded-lg bg-white/8 flex items-center justify-center flex-shrink-0 border border-white/10 text-foreground">
                   <Icon className="h-4 w-4" />
                 </div>
                 <div className="min-w-0">
-                  <p className="text-xs text-foreground/40 mb-0.5">{label}</p>
+                  <p className="text-xs text-foreground/40 font-medium mb-0.5">{label}</p>
                   {href ? (
-                    <a href={href} className="text-sm font-medium text-foreground/80 hover:text-indigo-300 transition-colors truncate block">{value}</a>
+                    <a href={href} className="text-sm font-semibold text-foreground hover:text-emerald-400 transition-colors truncate block">{value}</a>
                   ) : (
-                    <p className="text-sm font-medium text-foreground/80 truncate">{value}</p>
+                    <p className="text-sm font-semibold text-foreground truncate">{value}</p>
                   )}
                 </div>
               </div>
             ))}
           </div>
 
-          <div className="plate-ticks glass-dark p-6 gradient-border">
-            <div className="eyebrow mb-4">find me online</div>
-            <div className="space-y-3">
+          <div className="glass-card p-7 border border-white/10 space-y-3">
+            <span className="eyebrow mb-2">ONLINE PRESENCE</span>
+            <div className="space-y-2.5">
               {socialLinks.map(({ href, icon: Icon, label }) => (
-                <motion.a key={label} href={href} target="_blank" rel="noopener noreferrer"
-                  className="flex items-center gap-3 p-3.5 glass border border-white/8 text-foreground/50 hover:text-foreground/90 hover:border-indigo-400/30 transition-all duration-200 cursor-pointer"
-                  whileHover={{ x: 4 }}>
+                <motion.a
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 p-3.5 rounded-xl bg-white/5 border border-white/8 text-foreground/70 hover:text-foreground hover:bg-white/10 transition-all duration-200 cursor-pointer"
+                  whileHover={{ x: 4 }}
+                >
                   <Icon className="h-4 w-4 flex-shrink-0" />
                   <span className="text-sm font-medium">{label}</span>
                   <ArrowRight className="h-3.5 w-3.5 ml-auto opacity-40" />
@@ -129,9 +159,9 @@ export default function Contact() {
             </div>
           </div>
 
-          <div className="p-5 border border-indigo-400/20 bg-indigo-400/5">
-            <p className="text-xs text-foreground/50 leading-relaxed">
-              I typically respond within <span className="text-indigo-300 font-medium">24 hours</span>. Whether it's a collaboration, project, or just a chat — I'm all ears!
+          <div className="p-5 rounded-2xl border border-white/10 bg-white/3">
+            <p className="text-xs text-foreground/60 leading-relaxed font-sans">
+              I usually respond within <span className="text-foreground font-semibold">24 hours</span>. Looking forward to discussing projects or opportunities!
             </p>
           </div>
         </motion.div>

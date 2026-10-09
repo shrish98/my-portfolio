@@ -54,7 +54,7 @@ const projects: Project[] = [
   },
   {
     id: 4,
-    title: "TaskForge — Asynchronous Job & Queue Engine",
+    title: "TaskForge — Asynchronous Job Queue Engine",
     description: "Asynchronous job execution and distributed queue engine with live telemetry dashboard, worker concurrency, and automated task logging built with BullMQ, Redis, and WebSockets.",
     image: "/taskforge.png",
     tags: ["Next.js", "BullMQ", "Redis", "WebSockets", "Prisma", "PostgreSQL"],
@@ -85,7 +85,7 @@ export default function ProjectsShowcase(): ReactElement {
   }, [activeFilter]);
 
   return (
-    <section ref={ref} className="py-8">
+    <section ref={ref} className="py-12">
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -93,12 +93,13 @@ export default function ProjectsShowcase(): ReactElement {
         transition={{ duration: 0.6 }}
         className="text-center mb-12"
       >
-        <div className="eyebrow mb-4">what i&apos;ve built</div>
-        <h2 className="text-4xl lg:text-5xl font-bold gradient-text mb-4">My Projects</h2>
-        <p className="text-foreground/50 max-w-xl mx-auto text-sm leading-relaxed">
-          A collection of real-world projects — from agentic AI search tools to fully containerized price-tracking SaaS platforms.
+        <span className="eyebrow mb-3">SELECTED WORK</span>
+        <h2 className="text-4xl lg:text-5xl font-extrabold tracking-tight mb-4">
+          Featured <span className="gradient-text">Projects</span>
+        </h2>
+        <p className="text-foreground/60 max-w-xl mx-auto text-base leading-relaxed">
+          Production-grade applications engineered with modern full-stack frameworks, LLM orchestrations, and distributed background jobs.
         </p>
-        <div className="h-px w-24 mx-auto mt-4 bg-gradient-to-r from-transparent via-indigo-400 to-transparent" />
       </motion.div>
 
       {/* Filter Pills */}
@@ -112,10 +113,10 @@ export default function ProjectsShowcase(): ReactElement {
           <button
             key={key}
             onClick={() => setActiveFilter(key)}
-            className={`flex items-center gap-2 px-5 py-2 font-mono text-xs uppercase tracking-wider transition-all duration-300 cursor-pointer ${
+            className={`flex items-center gap-2 px-5 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-200 cursor-pointer ${
               activeFilter === key
-                ? 'bg-indigo-500 text-slate-950 font-bold'
-                : 'glass border border-white/10 text-foreground/50 hover:text-foreground hover:border-indigo-400/30'
+                ? 'accent-btn shadow-md'
+                : 'bg-white/5 border border-white/10 text-foreground/60 hover:text-foreground hover:bg-white/10'
             }`}
           >
             {key === 'all' && <Filter className="h-3.5 w-3.5" />}
@@ -125,7 +126,7 @@ export default function ProjectsShowcase(): ReactElement {
       </motion.div>
 
       {/* Projects Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 max-w-4xl mx-auto gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 max-w-5xl mx-auto gap-8">
         {filteredProjects.map((project) => (
           <ProjectCard key={project.id} project={project} />
         ))}
@@ -141,38 +142,37 @@ function ProjectCard({ project }: { project: Project }): ReactElement {
     <div
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      className="plate-ticks group relative overflow-hidden glass-dark border border-white/8 hover:border-indigo-400/25 transition-all duration-400 hover:glow-violet-sm flex flex-col"
+      className="group relative overflow-hidden rounded-2xl glass-card border border-white/10 hover:border-white/25 transition-all duration-300 flex flex-col shadow-xl shadow-black/40"
     >
       {/* Featured Badge */}
       {project.featured && (
-        <div className="absolute top-3 left-3 z-20 flex items-center gap-1 px-2.5 py-1 font-mono text-[10px] uppercase tracking-wider font-semibold bg-indigo-500 text-slate-950">
-          <Sparkles className="h-2.5 w-2.5" />
-          Featured
+        <div className="absolute top-3.5 left-3.5 z-20 flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] uppercase tracking-wider font-bold bg-[#0e1619] border border-white/15 text-foreground shadow-md backdrop-blur-md">
+          <Sparkles className="h-3 w-3 text-emerald-400" />
+          Featured Project
         </div>
       )}
 
-      {/* Image */}
-      <div className="relative h-48 overflow-hidden flex-shrink-0">
+      {/* Project Image Box */}
+      <div className="relative h-56 overflow-hidden flex-shrink-0 bg-black/40">
         <img
           src={project.image}
           alt={project.title}
-          className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-110"
+          className="w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
         />
-        {/* Gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#030712] via-[#030712]/40 to-transparent pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#080d0f] via-transparent to-transparent pointer-events-none opacity-80" />
 
-        {/* Hover action overlay */}
+        {/* Hover overlay with action buttons */}
         <motion.div
           initial={false}
           animate={{ opacity: hovered ? 1 : 0 }}
-          transition={{ duration: 0.25 }}
-          className="absolute inset-0 flex items-center justify-center gap-3 bg-black/60 backdrop-blur-sm"
+          transition={{ duration: 0.2 }}
+          className="absolute inset-0 flex items-center justify-center gap-3 bg-black/70 backdrop-blur-sm"
         >
           <Link href={project.url} target="_blank" rel="noopener noreferrer">
             <motion.span
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="inline-flex items-center gap-2 px-4 py-2 font-mono text-xs uppercase tracking-wider font-semibold bg-indigo-500 text-slate-950 cursor-pointer"
+              whileHover={{ scale: 1.04 }}
+              whileTap={{ scale: 0.96 }}
+              className="accent-btn inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs uppercase tracking-wider font-bold shadow-lg cursor-pointer"
             >
               <ExternalLink className="h-3.5 w-3.5" />
               Live Demo
@@ -180,26 +180,23 @@ function ProjectCard({ project }: { project: Project }): ReactElement {
           </Link>
           <Link href={project.github} target="_blank" rel="noopener noreferrer">
             <motion.span
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="inline-flex items-center gap-2 px-4 py-2 font-mono text-xs uppercase tracking-wider font-semibold glass border border-white/20 text-white cursor-pointer"
+              whileHover={{ scale: 1.04 }}
+              whileTap={{ scale: 0.96 }}
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs uppercase tracking-wider font-semibold bg-white/10 border border-white/20 text-foreground hover:bg-white/20 cursor-pointer backdrop-blur-md"
             >
               <Github className="h-3.5 w-3.5" />
-              Code
+              Source Code
             </motion.span>
           </Link>
         </motion.div>
       </div>
 
-      {/* Card Content */}
-      <div className="p-5 flex flex-col flex-1 relative">
-        {/* Gradient top accent line */}
-        <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-indigo-400/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-        <h3 className="text-base font-bold text-foreground/90 group-hover:text-indigo-300 transition-colors duration-300 mb-2 leading-snug">
+      {/* Content */}
+      <div className="p-6 flex flex-col flex-1">
+        <h3 className="text-lg font-bold text-foreground group-hover:text-emerald-400 transition-colors duration-200 mb-2 leading-snug">
           {project.title}
         </h3>
-        <p className="text-foreground/50 text-xs leading-relaxed mb-4 flex-1">
+        <p className="text-foreground/60 text-sm leading-relaxed mb-5 flex-1">
           {project.description}
         </p>
 

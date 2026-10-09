@@ -36,7 +36,7 @@ export function TechStack() {
   const secondHalf = techIcons.slice(Math.ceil(techIcons.length / 2));
 
   return (
-    <section ref={ref} className="py-8 w-full relative">
+    <section ref={ref} className="py-12 w-full relative">
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -44,12 +44,13 @@ export function TechStack() {
         transition={{ duration: 0.6 }}
         className="text-center mb-12"
       >
-        <div className="eyebrow mb-4">my toolkit</div>
-        <h2 className="text-4xl lg:text-5xl font-bold gradient-text mb-4">Tech Stack</h2>
-        <p className="text-foreground/50 max-w-lg mx-auto text-sm">
-          Technologies I use to bring ideas to life — from frontend layouts to intelligent backend workflows.
+        <span className="eyebrow mb-3">SYSTEM TOOLKIT</span>
+        <h2 className="text-4xl lg:text-5xl font-extrabold tracking-tight mb-4">
+          Tech <span className="gradient-text">Stack</span>
+        </h2>
+        <p className="text-foreground/60 max-w-lg mx-auto text-base">
+          Languages, frameworks, database systems, and cloud tooling powering my applications.
         </p>
-        <div className="h-px w-24 mx-auto mt-4 bg-gradient-to-r from-transparent via-indigo-400 to-transparent" />
       </motion.div>
 
       {/* Dual Marquee */}
@@ -60,14 +61,14 @@ export function TechStack() {
         className="space-y-4"
       >
         {/* Row 1 — Left to Right */}
-        <Marquee pauseOnHover className="[--duration:60s]" repeat={3}>
+        <Marquee pauseOnHover className="[--duration:55s]" repeat={3}>
           {firstHalf.map((icon, index) => (
             <IconCard key={index} icon={icon} />
           ))}
         </Marquee>
 
         {/* Row 2 — Right to Left */}
-        <Marquee pauseOnHover reverse className="[--duration:55s]" repeat={3}>
+        <Marquee pauseOnHover reverse className="[--duration:50s]" repeat={3}>
           {secondHalf.map((icon, index) => (
             <IconCard key={index} icon={icon} />
           ))}
@@ -83,14 +84,14 @@ export function TechStack() {
 
 function IconCard({ icon }: { icon: { src: string; alt: string } }) {
   return (
-    <div className="group flex flex-col items-center justify-center gap-2 w-20 h-20 glass-dark border border-white/8 hover:border-indigo-400/30 hover:glow-violet-sm transition-all duration-300 mx-2 cursor-default">
+    <div className="group flex flex-col items-center justify-center gap-2 w-24 h-24 rounded-2xl glass-card border border-white/10 hover:border-white/25 transition-all duration-200 mx-2 cursor-default shadow-lg">
       <img
         src={icon.src}
         alt={icon.alt}
-        className="h-9 w-9 object-contain transition-transform duration-300 group-hover:scale-110"
+        className="h-10 w-10 object-contain transition-transform duration-300 group-hover:scale-110"
         loading="lazy"
       />
-      <span className="text-[10px] text-foreground/30 group-hover:text-foreground/60 transition-colors duration-200 text-center leading-tight">
+      <span className="text-[11px] font-semibold text-foreground/50 group-hover:text-foreground transition-colors duration-200 text-center leading-tight">
         {icon.alt}
       </span>
     </div>

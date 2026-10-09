@@ -1,8 +1,9 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Sparkles } from 'lucide-react';
 import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
+import { ThemeSwitcher } from '@/components/theme-switcher';
 
 const navItems = [
   { name: "Projects", href: "#projects" },
@@ -51,58 +52,79 @@ export function Header() {
         className="fixed top-0 left-0 right-0 z-[60] h-[2px] origin-left"
         style={{
           scaleX,
-          background: "linear-gradient(90deg, #818cf8, #22d3ee)",
+          backgroundColor: "var(--theme-accent)",
         }}
       />
 
       <header
-        className={`sticky top-0 z-50 w-full transition-all duration-500 ${
-          scrolled ? "glass-dark shadow-lg shadow-black/30" : "bg-transparent"
+        className={`sticky top-0 z-50 w-full transition-all duration-300 ${
+          scrolled ? "bg-[#080d0f]/80 backdrop-blur-xl border-b border-white/8 shadow-2xl shadow-black/40" : "bg-transparent"
         }`}
       >
         <div className="container mx-auto px-4 md:px-6">
           <div className="flex items-center justify-between h-20">
-            {/* Logo */}
+            {/* Brand Logo */}
             <a
               href="#hero"
-              className="font-mono text-lg text-foreground/60 hover:text-indigo-400 transition-colors duration-200"
+              className="flex items-center gap-2 group cursor-pointer"
             >
-              ~/<span className="text-foreground/90 font-semibold">shrishti</span><span className="text-cyan-400">_</span>
+              <div className="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center font-bold text-sm text-foreground group-hover:border-emerald-400/40 transition-colors duration-200">
+                S
+              </div>
+              <div className="flex flex-col">
+                <span className="font-bold text-base text-foreground tracking-tight group-hover:opacity-90 transition-opacity">
+                  Shrishti Tomar
+                </span>
+                <span className="text-[10px] text-foreground/40 font-mono tracking-wider">
+                  Full-Stack & AI
+                </span>
+              </div>
             </a>
 
             {/* Desktop Nav */}
-            <nav className="hidden md:flex items-center gap-1 font-mono">
-              {navItems.map((item) => (
-                <a
-                  key={item.name}
-                  href={item.href}
-                  className={`px-4 py-2 text-sm uppercase tracking-wider transition-all duration-200 border-b ${
-                    activeSection === item.name.toLowerCase()
-                      ? "text-indigo-400 border-indigo-400/60"
-                      : "text-foreground/60 hover:text-foreground border-transparent hover:border-white/15"
-                  }`}
-                >
-                  {item.name}
-                </a>
-              ))}
+            <div className="hidden md:flex items-center gap-6">
+              <nav className="flex items-center gap-1 font-medium text-sm">
+                {navItems.map((item) => (
+                  <a
+                    key={item.name}
+                    href={item.href}
+                    className={`px-4 py-2 rounded-full transition-all duration-200 ${
+                      activeSection === item.name.toLowerCase()
+                        ? "text-foreground bg-white/8 font-semibold"
+                        : "text-foreground/60 hover:text-foreground hover:bg-white/5"
+                    }`}
+                  >
+                    {item.name}
+                  </a>
+                ))}
+              </nav>
+
+              {/* Theme Switcher Widget */}
+              <ThemeSwitcher />
+
+              {/* Hire Me CTA */}
               <a
                 href="#contact"
-                className="ml-2 inline-flex items-center gap-2 px-4 py-2 text-sm uppercase tracking-wider font-semibold bg-indigo-500 text-slate-950 hover:bg-indigo-400 transition-all duration-200"
+                className="accent-btn px-4 py-2 rounded-full text-xs uppercase tracking-wider font-semibold flex items-center gap-1.5"
               >
-                Hire Me
+                <Sparkles className="w-3.5 h-3.5" />
+                <span>Hire Me</span>
               </a>
-            </nav>
+            </div>
 
-            {/* Mobile Toggle */}
-            <button
-              type="button"
-              onClick={() => setIsOpen((prev) => !prev)}
-              aria-label={isOpen ? "Close menu" : "Open menu"}
-              aria-expanded={isOpen}
-              className="md:hidden flex items-center justify-center h-10 w-10 text-foreground/70 hover:text-foreground hover:bg-white/5 transition-all duration-200"
-            >
-              {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-            </button>
+            {/* Mobile Toggle & Theme Switcher */}
+            <div className="flex items-center gap-2 md:hidden">
+              <ThemeSwitcher />
+              <button
+                type="button"
+                onClick={() => setIsOpen((prev) => !prev)}
+                aria-label={isOpen ? "Close menu" : "Open menu"}
+                aria-expanded={isOpen}
+                className="flex items-center justify-center h-10 w-10 rounded-lg text-foreground/70 hover:text-foreground bg-white/5 border border-white/10 transition-all duration-200"
+              >
+                {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+              </button>
+            </div>
           </div>
         </div>
 
@@ -113,22 +135,22 @@ export function Header() {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.25, ease: "easeInOut" }}
-              className="md:hidden overflow-hidden glass-dark border-t border-white/5 font-mono"
+              transition={{ duration: 0.2, ease: "easeInOut" }}
+              className="md:hidden overflow-hidden bg-[#0a0f12] border-t border-white/8 font-sans"
             >
-              <div className="px-4 py-4 space-y-1">
+              <div className="px-4 py-4 space-y-2">
                 {navItems.map((item, i) => (
                   <motion.a
                     key={item.name}
                     href={item.href}
-                    initial={{ x: -20, opacity: 0 }}
+                    initial={{ x: -15, opacity: 0 }}
                     animate={{ x: 0, opacity: 1 }}
-                    transition={{ delay: i * 0.07 }}
+                    transition={{ delay: i * 0.05 }}
                     onClick={() => setIsOpen(false)}
-                    className={`flex items-center px-4 py-3 text-sm uppercase tracking-wider transition-all duration-200 border-l-2 ${
+                    className={`flex items-center px-4 py-3 rounded-lg text-sm transition-all duration-200 ${
                       activeSection === item.name.toLowerCase()
-                        ? "text-indigo-400 border-indigo-400/60 bg-indigo-400/5"
-                        : "text-foreground/60 hover:text-foreground border-transparent hover:bg-white/5"
+                        ? "text-foreground bg-white/10 font-semibold"
+                        : "text-foreground/70 hover:text-foreground hover:bg-white/5"
                     }`}
                   >
                     {item.name}
@@ -136,12 +158,13 @@ export function Header() {
                 ))}
                 <motion.a
                   href="#contact"
-                  initial={{ x: -20, opacity: 0 }}
+                  initial={{ x: -15, opacity: 0 }}
                   animate={{ x: 0, opacity: 1 }}
-                  transition={{ delay: navItems.length * 0.07 }}
+                  transition={{ delay: navItems.length * 0.05 }}
                   onClick={() => setIsOpen(false)}
-                  className="flex items-center justify-center gap-2 w-full px-4 py-3 mt-2 text-sm uppercase tracking-wider font-semibold bg-indigo-500 text-slate-950"
+                  className="accent-btn flex items-center justify-center gap-2 w-full px-4 py-3 rounded-lg text-sm font-semibold"
                 >
+                  <Sparkles className="w-4 h-4" />
                   Hire Me
                 </motion.a>
               </div>

@@ -26,12 +26,12 @@ export default function Home() {
   }, [pathname]);
 
   return (
-    <main className="min-h-screen bg-background font-[family-name:var(--font-outfit)]">
+    <main className="min-h-screen bg-background font-[family-name:var(--font-outfit)] text-foreground">
       <Header />
       <section id="hero">
         <HeroSection />
       </section>
-      <div className="container mx-auto px-4 md:px-6 space-y-24 pt-24 pb-24">
+      <div className="container mx-auto px-4 md:px-6 space-y-28 pt-16 pb-24">
         <section id="tech-stack">
           <TechStack />
         </section>
@@ -47,14 +47,14 @@ export default function Home() {
       </div>
 
       {/* Footer */}
-      <footer className="border-t border-white/5 py-8 font-mono">
+      <footer className="border-t border-white/8 py-8">
         <div className="container mx-auto px-4 md:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-foreground/30 text-xs">
-            © {new Date().getFullYear()} <span className="text-indigo-400 font-medium">Shrishti Tomar</span>
+          <p className="text-foreground/40 text-xs font-medium">
+            © {new Date().getFullYear()} <span className="text-foreground font-bold">Shrishti Tomar</span>. All rights reserved.
           </p>
-          <div className="flex items-center gap-1.5 text-xs text-foreground/20">
-            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-            <span>Available for work</span>
+          <div className="flex items-center gap-2 text-xs font-medium text-foreground/40">
+            <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+            <span>Available for new projects & roles</span>
           </div>
         </div>
       </footer>
