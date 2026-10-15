@@ -77,7 +77,7 @@ export const projects: Project[] = [
     metrics: [
       { value: '60 ms', label: 'median API latency under OCR load' },
       { value: '3 jobs/s', label: 'OCR throughput on one laptop' },
-      { value: '69', label: 'unit + integration tests in CI' },
+      { value: '70', label: 'unit + integration tests in CI' },
     ],
     stack: ['Express', 'BullMQ', 'Redis', 'Socket.IO', 'PostgreSQL', 'Prisma', 'Docker Compose'],
     image: '/taskforge.png',
