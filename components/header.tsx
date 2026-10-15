@@ -1,177 +1,166 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from 'react';
-import { Menu, X, Sparkles } from 'lucide-react';
-import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
-import { ThemeSwitcher } from '@/components/theme-switcher';
+import { useEffect, useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
+import { LocalTime } from '@/components/local-time';
+import { nav, site } from '@/lib/data';
 
-const navItems = [
-  { name: "Projects", href: "#projects" },
-  { name: "About", href: "#about" },
-  { name: "Contact", href: "#contact" },
-];
-
-export function Header() {
-  const [mounted, setMounted] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState("");
-  const [scrolled, setScrolled] = useState(false);
-  const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
+function useActiveSection() {
+  const [active, setActive] = useState<string | null>(null);
 
   useEffect(() => {
-    setMounted(true);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) setActive(entry.target.id);
+        }
+      },
+      // A thin band across the middle of the viewport decides which section is "current".
+      { rootMargin: '-45% 0px -50% 0px' },
+    );
+    const targets = ['top', ...nav.map((n) => n.id)].map((id) => document.getElementById(id));
+    targets.forEach((el) => el && observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
+
+  return active;
+}
+
+export function Header() {
+  const active = useActiveSection();
+  const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 12);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
   useEffect(() => {
-    if (!mounted) return;
-
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-      const sections = ["projects", "about", "contact"];
-      const current = sections.find(section => {
-        const el = document.getElementById(section);
-        if (!el) return false;
-        const rect = el.getBoundingClientRect();
-        return rect.top <= 120 && rect.bottom >= 120;
-      });
-      setActiveSection(current || "");
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setOpen(false);
+    document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', onKey);
+    return () => {
+      document.body.style.overflow = '';
+      window.removeEventListener('keydown', onKey);
     };
-
-    window.addEventListener("scroll", handleScroll);
-    handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [mounted]);
-
-  if (!mounted) return null;
+  }, [open]);
 
   return (
     <>
-      {/* Scroll Progress Bar */}
-      <motion.div
-        className="fixed top-0 left-0 right-0 z-[60] h-[2px] origin-left"
-        style={{
-          scaleX,
-          backgroundColor: "var(--theme-accent)",
-        }}
-      />
-
       <header
-        className={`sticky top-0 z-50 w-full transition-all duration-300 ${
-          scrolled ? "bg-[#080d0f]/80 backdrop-blur-xl border-b border-white/8 shadow-2xl shadow-black/40" : "bg-transparent"
+        className={`fixed inset-x-0 top-0 z-50 transition-[background-color,box-shadow] duration-300 ${
+          scrolled ? 'bg-paper/85 shadow-[0_1px_0_rgb(var(--ink)/0.1)] backdrop-blur-md' : ''
         }`}
       >
-        <div className="container mx-auto px-4 md:px-6">
-          <div className="flex items-center justify-between h-20">
-            {/* Brand Logo */}
-            <a
-              href="#hero"
-              className="flex items-center gap-2 group cursor-pointer"
-            >
-              <div className="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center font-bold text-sm text-foreground group-hover:border-emerald-400/40 transition-colors duration-200">
-                S
-              </div>
-              <div className="flex flex-col">
-                <span className="font-bold text-base text-foreground tracking-tight group-hover:opacity-90 transition-opacity">
-                  Shrishti Tomar
-                </span>
-                <span className="text-[10px] text-foreground/40 font-mono tracking-wider">
-                  Full-Stack & AI
-                </span>
-              </div>
+        <div className="shell flex h-16 items-center justify-between gap-6 md:h-[4.5rem]">
+          <div className="flex items-baseline gap-4">
+            <a href="#top" className="font-serif text-[1.65rem] leading-none tracking-[-0.01em]">
+              Shrishti Tomar<span className="text-accent">.</span>
             </a>
+            <p className="label hidden text-ink-mute lg:block">
+              Delhi <LocalTime className="ml-1 tabular-nums" />
+            </p>
+          </div>
 
-            {/* Desktop Nav */}
-            <div className="hidden md:flex items-center gap-6">
-              <nav className="flex items-center gap-1 font-medium text-sm">
-                {navItems.map((item) => (
-                  <a
-                    key={item.name}
-                    href={item.href}
-                    className={`px-4 py-2 rounded-full transition-all duration-200 ${
-                      activeSection === item.name.toLowerCase()
-                        ? "text-foreground bg-white/8 font-semibold"
-                        : "text-foreground/60 hover:text-foreground hover:bg-white/5"
-                    }`}
-                  >
-                    {item.name}
-                  </a>
-                ))}
-              </nav>
-
-              {/* Theme Switcher Widget */}
-              <ThemeSwitcher />
-
-              {/* Hire Me CTA */}
+          <nav aria-label="Primary" className="hidden items-center gap-1 md:flex">
+            {nav.map((item) => (
               <a
-                href="#contact"
-                className="accent-btn px-4 py-2 rounded-full text-xs uppercase tracking-wider font-semibold flex items-center gap-1.5"
+                key={item.id}
+                href={`#${item.id}`}
+                aria-current={active === item.id ? 'true' : undefined}
+                className={`relative px-3 py-2 text-[15px] transition-colors hover:text-ink ${
+                  active === item.id ? 'text-ink' : 'text-ink-soft'
+                }`}
               >
-                <Sparkles className="w-3.5 h-3.5" />
-                <span>Hire Me</span>
+                {item.label}
+                {active === item.id && (
+                  <motion.span
+                    layoutId="nav-dot"
+                    className="absolute -bottom-0.5 left-1/2 h-1.5 w-1.5 -translate-x-1/2 rounded-full bg-accent"
+                    transition={{ type: 'spring', stiffness: 500, damping: 35 }}
+                  />
+                )}
               </a>
-            </div>
+            ))}
+            <a href={site.resume} target="_blank" rel="noopener noreferrer" className="btn-ink ml-3 px-4 py-2.5 text-sm">
+              Résumé <span aria-hidden>↗</span>
+            </a>
+          </nav>
 
-            {/* Mobile Toggle & Theme Switcher */}
-            <div className="flex items-center gap-2 md:hidden">
-              <ThemeSwitcher />
+          <button
+            type="button"
+            onClick={() => setOpen(true)}
+            aria-expanded={open}
+            aria-controls="mobile-menu"
+            className="label rounded-full border border-ink/25 px-4 py-2.5 md:hidden"
+          >
+            Menu
+          </button>
+        </div>
+      </header>
+
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            id="mobile-menu"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Menu"
+            initial={{ clipPath: 'inset(0 0 100% 0)' }}
+            animate={{ clipPath: 'inset(0 0 0% 0)' }}
+            exit={{ clipPath: 'inset(0 0 100% 0)' }}
+            transition={{ duration: 0.45, ease: [0.65, 0, 0.35, 1] }}
+            className="fixed inset-0 z-[60] flex flex-col bg-ink text-paper md:hidden"
+          >
+            <div className="shell flex h-16 items-center justify-between">
+              <span className="font-serif text-[1.65rem] leading-none">
+                Shrishti Tomar<span className="text-accent">.</span>
+              </span>
               <button
                 type="button"
-                onClick={() => setIsOpen((prev) => !prev)}
-                aria-label={isOpen ? "Close menu" : "Open menu"}
-                aria-expanded={isOpen}
-                className="flex items-center justify-center h-10 w-10 rounded-lg text-foreground/70 hover:text-foreground bg-white/5 border border-white/10 transition-all duration-200"
+                onClick={() => setOpen(false)}
+                className="label rounded-full border border-paper/30 px-4 py-2.5"
+                autoFocus
               >
-                {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+                Close
               </button>
             </div>
-          </div>
-        </div>
 
-        {/* Mobile Dropdown */}
-        <AnimatePresence>
-          {isOpen && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.2, ease: "easeInOut" }}
-              className="md:hidden overflow-hidden bg-[#0a0f12] border-t border-white/8 font-sans"
-            >
-              <div className="px-4 py-4 space-y-2">
-                {navItems.map((item, i) => (
-                  <motion.a
-                    key={item.name}
-                    href={item.href}
-                    initial={{ x: -15, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    transition={{ delay: i * 0.05 }}
-                    onClick={() => setIsOpen(false)}
-                    className={`flex items-center px-4 py-3 rounded-lg text-sm transition-all duration-200 ${
-                      activeSection === item.name.toLowerCase()
-                        ? "text-foreground bg-white/10 font-semibold"
-                        : "text-foreground/70 hover:text-foreground hover:bg-white/5"
-                    }`}
+            <nav aria-label="Mobile" className="shell mt-10 flex-1">
+              <ol className="space-y-2">
+                {nav.map((item, i) => (
+                  <motion.li
+                    key={item.id}
+                    initial={{ opacity: 0, y: 24 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.15 + i * 0.06 }}
                   >
-                    {item.name}
-                  </motion.a>
+                    <a
+                      href={`#${item.id}`}
+                      onClick={() => setOpen(false)}
+                      className="flex items-baseline gap-4 border-b border-paper/15 py-3"
+                    >
+                      <span className="label text-paper/50">0{i + 1}</span>
+                      <span className="font-serif text-6xl leading-none">{item.label}</span>
+                    </a>
+                  </motion.li>
                 ))}
-                <motion.a
-                  href="#contact"
-                  initial={{ x: -15, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
-                  transition={{ delay: navItems.length * 0.05 }}
-                  onClick={() => setIsOpen(false)}
-                  className="accent-btn flex items-center justify-center gap-2 w-full px-4 py-3 rounded-lg text-sm font-semibold"
-                >
-                  <Sparkles className="w-4 h-4" />
-                  Hire Me
-                </motion.a>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </header>
+              </ol>
+            </nav>
+
+            <div className="shell flex flex-wrap gap-x-6 gap-y-3 pb-10 text-paper/70">
+              <a href={site.resume} target="_blank" rel="noopener noreferrer" className="link">Résumé ↗</a>
+              <a href={site.github} target="_blank" rel="noopener noreferrer" className="link">GitHub ↗</a>
+              <a href={site.linkedin} target="_blank" rel="noopener noreferrer" className="link">LinkedIn ↗</a>
+              <a href={site.leetcode} target="_blank" rel="noopener noreferrer" className="link">LeetCode ↗</a>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 }
