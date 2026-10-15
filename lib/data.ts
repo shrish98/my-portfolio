@@ -73,11 +73,11 @@ export const projects: Project[] = [
     kind: 'Backend · Queues',
     tagline: 'A job queue that takes the heavy lifting off the API.',
     description:
-      'An Express and BullMQ engine that moves CPU-heavy work (OCR, PDF generation, scraping) off the request path and onto concurrent workers backed by Redis. Socket.IO pushes live progress and audit logs to the dashboard instead of polling, failed jobs retry with exponential backoff, and the whole stack runs as five containers under Docker Compose, with Prisma on PostgreSQL and role-based JWT auth.',
+      'An Express and BullMQ engine that moves heavy work (OCR with Tesseract, web scraping, PDF reports, CSV exports, signed webhooks) off the request path and onto Redis-backed workers. Workers publish progress over Redis pub/sub and Socket.IO pushes it to the dashboard. Failed jobs retry with exponential backoff and then land in a dead-letter queue; idempotency keys stop duplicate jobs, and outbound fetches go through an SSRF guard. Load-tested, covered by integration tests against real Postgres and Redis, and runs as five containers under Docker Compose.',
     metrics: [
-      { value: '5', label: 'concurrent workers' },
-      { value: '<1.8 ms', label: 'Redis transport latency' },
-      { value: '3×', label: 'retries, exponential backoff' },
+      { value: '60 ms', label: 'median API latency under OCR load' },
+      { value: '3 jobs/s', label: 'OCR throughput on one laptop' },
+      { value: '69', label: 'unit + integration tests in CI' },
     ],
     stack: ['Express', 'BullMQ', 'Redis', 'Socket.IO', 'PostgreSQL', 'Prisma', 'Docker Compose'],
     image: '/taskforge.png',
