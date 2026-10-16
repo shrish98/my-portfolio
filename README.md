@@ -2,7 +2,7 @@
 
 Personal portfolio of Shrishti Tomar, a software developer in Delhi working on backend and full-stack systems.
 
-**Live:** [my-portfolio-beta-steel-ih418ur0sz.vercel.app](https://my-portfolio-beta-steel-ih418ur0sz.vercel.app/)
+**Live:** [shrishti-tomar.vercel.app](https://shrishti-tomar.vercel.app/)
 
 ## Built with
 

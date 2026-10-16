@@ -16,7 +16,7 @@ export const site = {
   email: 'shrishtitomar300@gmail.com',
   resume: '/resume.pdf',
   github: 'https://github.com/shrish98',
-  linkedin: 'https://www.linkedin.com/in/shrishti-tomar-a924a1274/',
+  linkedin: 'https://www.linkedin.com/in/shrishti-tomar-dev/',
   leetcode: 'https://leetcode.com/u/shri0908',
 };
 
