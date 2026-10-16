@@ -66,15 +66,15 @@ const stickers: Sticker[] = [
   },
   {
     id: 'latency',
-    label: 'RepoInsight answer time cut from 12 seconds to 3',
+    label: 'TaskForge API holds 60 ms median latency under OCR load',
     rotate: 7,
     position: 'left-[54%] top-[36%] md:left-[60%] md:top-[30%] lg:left-[12%] lg:top-[45%]',
     body: (
       <div className="rounded-[10px] bg-white p-[5px]">
         <div className="whitespace-nowrap rounded-[6px] border-[1.5px] border-dashed border-ink/35 px-4 py-2.5 text-center">
-          <p className="label text-[9px] text-ink-mute">RepoInsight</p>
-          <p className="mt-1.5 font-serif text-[1.9rem] leading-none md:text-[2.3rem]">12s → 3s</p>
-          <p className="label mt-1.5 text-[9px] text-ink-mute">answer time</p>
+          <p className="label text-[9px] text-ink-mute">TaskForge</p>
+          <p className="mt-1.5 font-serif text-[1.9rem] leading-none md:text-[2.3rem]">60 ms</p>
+          <p className="label mt-1.5 text-[9px] text-ink-mute">p50 under load</p>
         </div>
       </div>
     ),

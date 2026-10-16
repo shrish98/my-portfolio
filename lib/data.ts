@@ -53,13 +53,9 @@ export const projects: Project[] = [
     kind: 'AI · RAG',
     tagline: 'Ask questions about any GitHub codebase in plain English.',
     description:
-      'Point it at a public repo and it clones the code, indexes every source file as vector embeddings, and answers natural-language questions about it. A LangGraph layer routes each question to the right agent (code search, dependency mapping or summarisation), which brought the average answer time down from 12s to 3s. The Vite frontend and Express backend ship as one multi-stage Docker image on AWS EC2, with JWT auth and chat history in MongoDB Atlas.',
-    metrics: [
-      { value: '10,000+', label: 'files per codebase' },
-      { value: '12s → 3s', label: 'average answer time' },
-      { value: '−85%', label: 'Docker image size' },
-    ],
-    stack: ['React', 'Vite', 'Express', 'LangGraph', 'Gemini', 'MongoDB Atlas', 'Docker', 'AWS EC2'],
+      'Point it at a public GitHub repo and it chunks the code, stores it as Gemini embeddings in MongoDB Atlas Vector Search, and answers plain-English questions about it. A LangGraph pipeline searches by both meaning and keyword, answers with an LLM on Groq, can pull in the repo’s GitHub issues, and grades its own answer: if it comes back thin, it rewrites the search and tries again. Answers cite the files they came from. The React frontend and Express backend ship as one Docker image on AWS EC2, with GitHub sign-in, JWT auth and chat history in MongoDB Atlas.',
+    metrics: [],
+    stack: ['React', 'Vite', 'Express', 'LangGraph', 'Gemini', 'Groq', 'MongoDB Atlas', 'Docker', 'AWS EC2'],
     image: '/reposight.png',
     live: 'http://13.201.51.249:5000',
     source: 'https://github.com/shrish98/RepoInsight',
@@ -109,11 +105,8 @@ export const projects: Project[] = [
     kind: 'SaaS · Scraping',
     tagline: 'Emails you the moment a price drops.',
     description:
-      'Paste a product link and Firecrawl pulls clean product data, even from stores that block ordinary scrapers. Cron jobs keep re-checking prices against your target, with Redis caching across every tracked product, and Resend emails you when the price falls. Price history is charted so you can see the trend.',
-    metrics: [
-      { value: '50+', label: 'products tracked' },
-      { value: '<5 min', label: 'from price drop to inbox' },
-    ],
+      'Paste a product link and Firecrawl pulls clean product data (name, price, currency, image), even from JavaScript-heavy store pages. A secret-protected cron route re-checks prices against your target, Redis caches scrapes and rate-limits new products per user, and Resend emails you when the price falls. Price history is charted so you can see the trend.',
+    metrics: [],
     stack: ['Next.js', 'Supabase', 'Firecrawl', 'Redis', 'Resend', 'Recharts'],
     image: '/dropalert.png',
     live: 'https://dropalert-lemon.vercel.app/',
@@ -146,7 +139,7 @@ export const facts: { term: string; detail: string }[] = [
   { term: 'Looking for', detail: 'SDE internships' },
 ];
 
-export const interests = ['RAG & vector search', 'Multi-agent workflows', 'Job queues', 'Real-time systems', 'System design'];
+export const interests = ['RAG & vector search', 'Agentic LLM workflows', 'Job queues', 'Real-time systems', 'System design'];
 
 // Receipt line items. `usedIn` points at project numbers above.
 export const shippedWith: { item: string; usedIn: string[] }[] = [
@@ -155,6 +148,7 @@ export const shippedWith: { item: string; usedIn: string[] }[] = [
   { item: 'Next.js', usedIn: ['03', '04'] },
   { item: 'LangGraph', usedIn: ['01'] },
   { item: 'Gemini API', usedIn: ['01', '03'] },
+  { item: 'Groq', usedIn: ['01'] },
   { item: 'MongoDB Atlas', usedIn: ['01'] },
   { item: 'PostgreSQL', usedIn: ['02', '03'] },
   { item: 'Prisma', usedIn: ['02', '03'] },
@@ -167,7 +161,8 @@ export const shippedWith: { item: string; usedIn: string[] }[] = [
   { item: 'Resend', usedIn: ['04'] },
   { item: 'Inngest', usedIn: ['03'] },
   { item: 'Docker / Compose', usedIn: ['01', '02'] },
-  { item: 'AWS EC2', usedIn: ['01', '02'] },
+  { item: 'Jest', usedIn: ['02'] },
+  { item: 'AWS EC2', usedIn: ['01'] },
 ];
 
 export const alsoInTheBag = [

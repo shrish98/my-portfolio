@@ -34,12 +34,12 @@ export function About() {
             <p>
               I’m a software developer in Delhi, finishing a B.Tech in Computer Science in 2027. Most of my time goes
               into the backend: Node.js and Express services, PostgreSQL and Redis, job queues and WebSockets, all
-              packaged with Docker and deployed to AWS.
+              packaged with Docker and deployed to AWS, Render and Vercel.
             </p>
             <p>
               Lately I’ve been building <Marker>RAG pipelines</Marker> and{' '}
-              <Marker>multi-agent workflows with LangGraph</Marker>, and caring about the unglamorous parts that make
-              them usable: latency, retries, auth and image size. Away from projects I’ve solved 400+ DSA problems and
+              <Marker>agentic workflows with LangGraph</Marker>, and caring about the unglamorous parts that make
+              them usable: latency, retries, auth and tests. Away from projects I’ve solved 400+ DSA problems and
               placed 3rd of 80+ teams at the GTBIT hackathon.
             </p>
           </div>
